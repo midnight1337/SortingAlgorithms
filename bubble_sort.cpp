@@ -1,24 +1,28 @@
 /*
 Bubble Sort - sorting algorithm that works by repeatedly swapping the adjacent elements if they are in the wrong order.
 
+Time complexity: O(N^2)
+Algorithm is easy to implement and understood, but it's very slow at large data sets.
+
 Traverse from left and compare adjacent elements and the higher one is placed at right side. 
 In this way, the largest element is moved to the rightmost end at first. 
 This process is then continued to find the second largest and place it and so on until the data is sorted.
 
 Detailed explenation:
-1.Set outter iterator (i) to 0 as we'll use first element to compare with others
-2.Start in inner loop (j) from left (index 0), compare adjacent element on the right (index 1), if compared element is smaller then swap them
-3.Increment iterator as our first element has moved to the right (index 1)
-4.Compare it again with next element
-5.Repeat till last element of array
-6.Increment outter iterator (i) and repeat all steps
+1.Start outter loop with iterator (i), it indicates how many times we should loop through sorting
+2.Start in inner loop with iterator (j), it indicates first element to begin with, ...
+compare with adjacent element on the right, if compared element is smaller then swap them
+3.Increment inner iterator (j) which indicates next element to begin with, ...
+compare it with adjacent element on the right, repeat till last element of an array
+4.Increment outter iterator (i), repeat all steps
 */
 #include <iostream>
+
 
 class BubbleSort
 {
     private:
-        int arr[10] = {3,1,2,7,0,9,4,5,8,6};
+        int arr[5] = {3,1,2,7,0};
         int arr_size = sizeof(arr) / sizeof(*(arr + 0));
 
     public:
