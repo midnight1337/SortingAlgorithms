@@ -26,33 +26,26 @@ class QuickSort
 
     public:
         QuickSort() = default;
-        void do_quick_sort();
+        void sort();
+        void quick_sort(int* unordered_array, int& array_size, int& smaller_item, int& larger_item);
         void print_array();
 };
 
-void QuickSort::do_quick_sort()
+
+void QuickSort::sort()
 {
-    int pivot = m_array[m_array_size - 1];
-    int limit = 0;
-    
-    for (int i = 0; i < m_array_size - 1; i++)
+
+}
+
+
+void QuickSort::quick_sort(int* unordered_array, int& array_size, int& smaller_item, int& larger_item)
+{
+    if (array_size <= 1)
     {
-        if (m_array[i] < pivot)
-        {
-            if (i != 0)
-            {
-                int hold_value = m_array[i + 1];
-                m_array[i + 1] = m_array[i];
-                m_array[i] = hold_value;
-            }
-        }
-        limit++;
+        return;
     }
 
-    int hold_value = m_array[limit];
-    m_array[limit] = pivot;
-    m_array[m_array_size - 1] = hold_value;
-
+    int smaller_array;
 }
 
 void QuickSort::print_array()
@@ -67,10 +60,13 @@ void QuickSort::print_array()
 
 int main()
 {
-    QuickSort quick_sort = QuickSort();
-    quick_sort.print_array();
-    quick_sort.do_quick_sort();
-    quick_sort.print_array();
+    QuickSort sort = QuickSort();
+
+    sort.print_array();
+
+    sort.quick_sort();
+
+    sort.print_array();
 
     return 0;
 }

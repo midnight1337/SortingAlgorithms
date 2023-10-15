@@ -5,17 +5,19 @@ first element from unsorted part is compared with right element from sorted part
 Time complexity: average case:O(N^2), best case O(N)
 Memory complexity: O(1)
 
-We assume that first element from collection is our first element in sorted part,
-In first iteration we compare i+1 element with i element as we said the first one is ordered.
-We swap elements and start another iteration with i+1, again we compare next unordered value
-with last ordered value, and we do it again as soon as it is larger than any element from sorted part.
+We assume that first element dereferenced by [i] from collection is our first element in sorted part,
+In first iteration we compare [i + 1] element with [i] element as we assume the first one is from ordered part and next one unordered.
+If compared element from unordered part is smaller then we swap them, so element [i] is now in unordered part and [i + 1] element is in ordered part,
+We check in a continous loop if that swapped element which is now in ordered part is smaller than any other from that part, and we swap them if it is.
+Algorithm works in a [N - 1] range
 
 Detailed explenation:
-1.Start iteration loop (i), it indicates how many times we should loop through collection,
-It ends at N - 1 because we can't access N element of an array.
-2.Create local variable that will help track variables from sorted part.
-3.Enter while loop if first unordered element is larger than last ordered element,
-Swap them, decrement local variable that helps tracing sroted part and repeat whole step.
+1.Start iteration loop (i), it indicates how many times we should loop through collection, It ends at N - 1 because we can't access N element of an array.
+2.Create local variable (j) that will help track variables from sorted part.
+3.Enter while loop,
+if last element from ordered part is larger than first element in unordered part, then swap them and decrement j,
+check if that new last sorted element is larger than previous one, if so swap them <-> continue in a while loop till the end of loop.
+4.Increment (i) and repeat
 */
 #include <iostream>
 
@@ -28,12 +30,12 @@ class InsertionSort
 
     public:
         InsertionSort() = default;
-        void do_insertion_sort();
+        void insertion_sort();
         void print_array();
 };
 
 
-void InsertionSort::do_insertion_sort()
+void InsertionSort::insertion_sort()
 {
     for(int i = 0; i < m_array_size - 1; i++)
     {
@@ -61,11 +63,13 @@ void InsertionSort::print_array()
 
 int main()
 {
-    InsertionSort insertion_sort = InsertionSort();
+    InsertionSort sort = InsertionSort();
     
-    insertion_sort.print_array();
-    insertion_sort.do_insertion_sort();
-    insertion_sort.print_array();
+    sort.print_array();
+
+    sort.insertion_sort();
+
+    sort.print_array();
 
     return 0;
 }
