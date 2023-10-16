@@ -1,72 +1,63 @@
 /*
-Quick sort - it's based on 'divide and conquer' assumption, bigger problems are divided into smallers,
-this way we'll get sorted data structer.
-It uses a pivot which helps us to create two sub-problems, one for smaller numbers han pivot and one for larger numbers than pivot
-
-Step by step:
-1.Choose a pivot as last element of collection
-1.1.Choose a limit as first element of collection - we don't know where our limit should be placed in order to divide collection into to sub-collections
-1.2.Start loop condition to compare elements, iteration over N-1 because we don't compare pivot with pivot:
-if first element to the right of limit is greater than pivot, number is on its place, proceed to next number
-if first element to the right of limit is smaller than pivot, then swap that number with next one, increment limit index
-At the end, swap pivot with first number to the right of limit index
-We are sure that numbers at the left of pivot are smaller than pivot, and numbers at the right of pivot are larger than pivot
-3.We use recursion to sort our two sub-divisions
-3.1.Start at smaller sub-division, we use same steps as above, we choose pivot and limit from that collection of smaller numbers than main pivot
-Repeat till one element is present
+Quick sort - it's based on 'divide and conquer' assumption, bigger problems are divided into smallers.
+It uses a pivot which helps us to create two sub-problems, one for smaller numbers han pivot and one for larger numbers than pivot.
+Divided parts are called partitions, each partition is called as a recursion till single element lasts as unsorted partition.
 */
 #include <iostream>
+using namespace std;
 
 
-class QuickSort
+int partition(int* array, int start, int stop)
 {
-    private:
-        int m_array[5] = {3,1,2,7,0};
-        int m_array_size = sizeof(m_array) / sizeof(*(m_array + 0));
+    // Determine pivot value as last value in collection
+    int pivot = array[stop];
 
-    public:
-        QuickSort() = default;
-        void sort();
-        void quick_sort(int* unordered_array, int& array_size, int& smaller_item, int& larger_item);
-        void print_array();
-};
+    // limit is an index that is placed as border to value, which is about to be swapped in a for loop. [limit | value_1, value_2]
+    int limit = (start - 1);
 
+    for (int j = start; j <= stop; j++)
+    {
+        if (array[j] < pivot)
+        {
+            limit++;
+            swap(array[limit], array[j]);
+        }
+    }
 
-void QuickSort::sort()
-{
+    // limit + 1, because we need to swap a value to the right of limit
+    swap(array[limit + 1], array[stop]);
 
+    // return a current pivot index
+    return (limit + 1);
 }
 
-
-void QuickSort::quick_sort(int* unordered_array, int& array_size, int& smaller_item, int& larger_item)
+void quicksort(int* array, int start, int stop)
 {
-    if (array_size <= 1)
+    // if start index is greater or equals stop index, then there is only single element in array to be sorted, hence sorting for that case is done
+    if (start >= stop)
     {
         return;
     }
 
-    int smaller_array;
-}
+    int pivot_index = partition(array, start, stop);
 
-void QuickSort::print_array()
-{
-    for (int i = 0; i < m_array_size; i++)
-    {
-        std::cout << m_array[i] << " ";
-    }
-    std::cout << std::endl;
+    quicksort(array, start, pivot_index - 1);
+    quicksort(array, pivot_index + 1, stop);
 }
-
 
 int main()
 {
-    QuickSort sort = QuickSort();
+    int array[] = {1,2,4,3};
+    int array_size = sizeof(array) / sizeof(array[0]);
+    int start = 0;
+    int stop = array_size - 1;
 
-    sort.print_array();
+    quicksort(array, start, stop);
 
-    sort.quick_sort();
-
-    sort.print_array();
-
+    cout << "Sorted Array\n";
+    for (int i = 0; i < array_size; i++)
+    {
+        cout << array[i] << " ";
+    }
     return 0;
 }
