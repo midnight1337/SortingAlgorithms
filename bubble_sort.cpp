@@ -1,19 +1,25 @@
 /*
-Bubble Sort - sorting algorithm that works by repeatedly swapping the adjacent elements if they are in the wrong order.
-
-Time complexity: O(N^2)
+Bubble Sort - sorting algorithm that works by repeatedly swapping the adjacent items if they are in the wrong order.
 Algorithm is easy to implement and understood, but it's very slow at large data sets.
 
-Traverse from left and compare adjacent elements and the higher one is placed at right side. 
-In this way, the largest element is moved to the rightmost end at first. 
-This process is then continued to find the second largest and place it and so on until the data is sorted.
+Time complexity: O(N^2)
+
+
+Traverse from left and compare first one with adjacent item, if first item is larger then swap them.
+In this way, the largest item is moved to the rightmost end at first. 
+This process is then continued to find the second largest item, process repeats until the data is sorted.
 
 Detailed explenation:
-1.Start outter loop with iterator (i), it indicates how many times we should loop through sorting
-2.Start in inner loop with iterator (j), it indicates first element to begin with, ...
-compare with adjacent element on the right, if compared element is smaller then swap them
-3.Increment inner iterator (j) which indicates next element to begin with, ...
-compare it with adjacent element on the right, repeat till last element of an array
+1.Start outter loop with iterator (i), it indicates how many times we should loop through array items
+
+2.Start in inner loop with iterator (j), it indicates first item to begin with and compare with next one,
+It works in range (0, array_size- 1 - i), -1 because we don't need to compare last item with last item,
+-i because every time i increments, we have one item less to compare, as most large item goes at the end of array in every loop.
+Compare first item with adjacent item on the right, if compared item is smaller then swap them
+
+3.Increment inner iterator (j) which indicates next item to begin with,
+compare it with adjacent item on the right, repeat till last item of an array
+
 4.Increment outter iterator (i), repeat all steps
 */
 #include <iostream>
@@ -21,49 +27,48 @@ compare it with adjacent element on the right, repeat till last element of an ar
 
 class BubbleSort
 {
-    private:
-        int arr[5] = {3,1,2,7,0};
-        int arr_size = sizeof(arr) / sizeof(*(arr + 0));
-
     public:
         BubbleSort() = default;
-        void do_bubble_sort();
-        void print_arr();
+        void bubble_sort(int* array, int array_size);
 };
 
 
-void BubbleSort::do_bubble_sort()
+void BubbleSort::bubble_sort(int* array, int array_size)
 {
-    for (int i = 0; i < arr_size - 1; i++)
+    for (int i = 0; i < array_size - 1; i++)
     {
-        for (int j = 0; j < arr_size - i - 1; j++)
+        for (int j = 0; j < array_size - i - 1; j++)
         {
-            if (arr[j] > arr[j+1])
+            if (array[j] > array[j + 1])
             {
-                int smaller_value = arr[j+1];
-                arr[j+1] = arr[j];
-                arr[j] = smaller_value;
+                int smaller_value = array[j + 1];
+                array[j + 1] = array[j];
+                array[j] = smaller_value;
             }
         }
     }
 }
 
-void BubbleSort::print_arr()
+
+void print(int* array, int array_size)
 {
-    for (int i = 0; i < arr_size; i++)
+    for (int i = 0; i < array_size; i++)
     {
-        std::cout << arr[i] << " ";
+        std::cout << array[i] << " ";
     }
-    std::cout << std::endl;
 }
 
 
 int main()
 {
-    BubbleSort bubble_sort = BubbleSort();
-    bubble_sort.print_arr();
-    bubble_sort.do_bubble_sort();
-    bubble_sort.print_arr();
+    int array[] = {3, 1, 2, 7, 0, 5};
+    int array_size = sizeof(array) / sizeof(array[0]);
+
+    BubbleSort sort = BubbleSort();
+
+    sort.bubble_sort(array, array_size);
+
+    print(array, array_size);
 
     return 0;
 }
