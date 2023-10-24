@@ -16,44 +16,44 @@ class MergeSort
 {
     public:
         MergeSort() = default;
-        void merge_sort(int* array, int start, int stop);
-        void merge(int* array, int start, int middle, int stop);
-        void fill_array(int* base_array, int* array_to_fill, int array_size, int start);
+        void merge_sort(int* array, int begin, int end);
+        void merge(int* array, int begin, int middle, int end);
+        void fill_array(int* base_array, int* array_to_fill, int array_size, int begin);
 };
 
-void MergeSort::merge_sort(int* array, int start, int stop)
+void MergeSort::merge_sort(int* array, int begin, int end)
 {
     // Base condition
-    if (start >= stop) {return;}
+    if (begin >= end) {return;}
     
     // Determine middle of an base array
-    int middle = (start + stop) / 2;
+    int middle = (begin + end) / 2;
 
-    // Call the same method till condition met
-    merge_sort(array, start, middle);
-    merge_sort(array, middle + 1, stop);
+    // Call the same method till condition met for both halfs of base array
+    merge_sort(array, begin, middle);
+    merge_sort(array, middle + 1, end);
 
     // Merge arrays
-    merge(array, start, middle, stop);
+    merge(array, begin, middle, end);
 }
 
-void MergeSort::merge(int* array, int start, int middle, int stop)
+void MergeSort::merge(int* array, int begin, int middle, int end)
 {
     //Initialise temporary left and right array, their border is at the middle of base array
-    int l_array_size = middle - start + 1;
-    int r_array_size = stop - middle;
+    int l_array_size = middle - begin + 1;
+    int r_array_size = end - middle;
 
     int l_array[l_array_size];
     int r_array[r_array_size];
 
     //Fill temporary arrays with base array elements
-    fill_array(array, l_array, l_array_size, start);
+    fill_array(array, l_array, l_array_size, begin);
     fill_array(array, r_array, r_array_size, middle + 1);
 
     //Create temporary variables that helps to merge arrays
     int i = 0;  // initial index of left array
     int j = 0;  // initial index of right array
-    int k = start;  // initial index of merged sub arrays
+    int k = begin;  // initial index of merged sub arrays
 
     //Merge temporary arrays into base array
     while (i < l_array_size && j < r_array_size)
@@ -86,11 +86,11 @@ void MergeSort::merge(int* array, int start, int middle, int stop)
     }
 }
 
-void MergeSort::fill_array(int* base_array, int* array_to_fill, int array_size, int start)
+void MergeSort::fill_array(int* base_array, int* array_to_fill, int array_size, int begin)
 {
     for (int i = 0; i < array_size; i++)
     {
-        array_to_fill[i] = base_array[i + start];
+        array_to_fill[i] = base_array[i + begin];
     }
 }
 
@@ -106,14 +106,14 @@ void print(int* array, int array_size)
 
 int main()
 {
-    int array[] = {3, 1, 2, 7, 0, 5};
-    int array_size = sizeof(array) / sizeof(array[0]);  //6
-    int start = 0;
-    int stop = array_size - 1;  //5
+    int array[] = {3, 1, 6, 2, 7, 0, 5, 4, 8, 9};
+    int array_size = sizeof(array) / sizeof(array[0]);
+    int begin = 0;
+    int end = array_size - 1;
 
     MergeSort sort = MergeSort();
 
-    sort.merge_sort(array, start, stop);
+    sort.merge_sort(array, begin, end);
 
     print(array, array_size);
 
